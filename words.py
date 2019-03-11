@@ -27,8 +27,8 @@ def make_dir(path):
             if not os.path.isfile(path):
                 os.makedirs(path)
         return True
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print (str(e))
         return False
 
 
@@ -67,7 +67,7 @@ def pretreatment_image(img, times=3):
 
     img = 255 - img
     y, x = img.shape[:2]
-    for _ in xrange(times):
+    for _ in range(times):
         mean_value = get_mean_value(img)
         for _x in range(0, x, 1):
             # temp_value = 0
@@ -165,13 +165,13 @@ def cut_version2(img, threshold=182):
     """图像结束位置"""
     img_rect_en = []
     mean_arr = np.zeros((x, 1))
-    for _x in xrange(x):
+    for _x in range(x):
         tmp_sum = 0
-        for _y in xrange(y):
+        for _y in range(y):
             tmp_sum += img[_y][_x]
         mean_arr[_x] = tmp_sum / y
 
-    for _value in xrange(x):
+    for _value in range(x):
         if _value > 0 and mean_arr[_value] >= mean_arr[_value - 1] + 30 and mean_arr[_value] >= threshold:
             if _value > img_st_pos + 14:
                 img_rect_st.append(img_st_pos)
@@ -234,15 +234,15 @@ def get_real_image(img, threshold=130):
     y, x = img.shape[:2]
     real_x_start = 0
     real_x_end = 0
-    for _x in xrange(x):
-        for _y in xrange(y):
+    for _x in range(x):
+        for _y in range(y):
             if img[_y][_x] <= threshold:
                 real_x_start = _x
                 break
         if real_x_start != 0:
             break
     for _x in range(x - 1, 0, -1):
-        for _y in xrange(y):
+        for _y in range(y):
             if img[_y][_x] <= threshold:
                 real_x_end = _x + 1
                 break
@@ -260,15 +260,15 @@ def get_binary_real_image(img):
     y, x = img.shape[:2]
     real_x_st = 0
     real_x_en = 0
-    for _x in xrange(x):
-        for _y in xrange(y):
+    for _x in range(x):
+        for _y in range(y):
             if img[_y][_x] != 0:
                 real_x_st = _x
                 break
         if real_x_st != 0:
             break
     for _x in range(x - 1, 0, -1):
-        for _y in xrange(y):
+        for _y in range(y):
             if img[_y][_x] != 0:
                 real_x_en = _x + 1
                 break
@@ -287,15 +287,15 @@ def get_real_image_rect(img):
     real_x_st = 0
     real_x_en = 0
     """对于水平方向"""
-    for _x in xrange(x):
-        for _y in xrange(y):
+    for _x in range(x):
+        for _y in range(y):
             if img[_y][_x] != 0:
                 real_x_st = _x
                 break
         if real_x_st != 0:
             break
     for _x in range(x - 1, 0, -1):
-        for _y in xrange(y):
+        for _y in range(y):
             if img[_y][_x] != 0:
                 real_x_en = _x
                 break
@@ -312,7 +312,7 @@ def get_real_image_rect(img):
         if real_x_st != 0:
             break
     for _x in range(real_x_st, real_x_en + 1, 1):
-        for _y in xrange(y - 1, 0, -1):
+        for _y in range(y - 1, 0, -1):
             if img[_y][_x] != 0:
                 real_y_en = _y
                 break
@@ -332,8 +332,8 @@ def judge_the_image_size(img, height=24, width=60):
     """
     y_len, x_len = img.shape[:2]
     new_img = np.zeros((height, width))
-    for y_px in xrange(height):
-        for i in xrange(width):
+    for y_px in range(height):
+        for i in range(width):
             if y_len > y_px and x_len > i:
                 new_img[y_px][i] = img[y_px][i]
             else:
@@ -464,7 +464,7 @@ def write_image(img, del_text_path, image_cnt, words_name, line_pre, line_nex, b
     :return:
     """
     y, x = img.shape[:2]
-    for _indx in xrange(len(line_pre)):
+    for _indx in range(len(line_pre)):
 
         t_img = img[0:y, int(line_pre[_indx]):int(line_nex[_indx] + 1)]
         if binary_flag:
@@ -492,7 +492,7 @@ def get_image(img, line_pre, line_nex, binary_flag=False):
     """
     y, x = img.shape[:2]
     list_img = []
-    for _indx in xrange(len(line_pre)):
+    for _indx in range(len(line_pre)):
 
         t_img = img[0:y, int(line_pre[_indx]):int(line_nex[_indx] + 1)]
         if binary_flag:
@@ -518,7 +518,7 @@ def cut(image_cnt, path_dir= cfg.ROOT + '/data/download'):
         return
     for words_name in os.listdir(words_path):
         try:
-            print words_name
+            print (words_name)
             img = cv2.imread(os.path.join(words_path, words_name), 0)
             img = get_real_image(img, 160)
             if 2 == analyse_version(img):
@@ -533,6 +533,7 @@ def cut(image_cnt, path_dir= cfg.ROOT + '/data/download'):
                 save_img(img, n_img, del_text_path, image_cnt, words_name, y_value=10, x_value=28)
                 # mesr_text(img, del_text_path, image_cnt, words_name, y_value=10, x_value=28)
         except Exception as e:
+            print(str(e))
             pass
 
 
@@ -561,7 +562,7 @@ def classify_image(path_dir=cfg.ROOT + '/data/download/words',
     """
     temp = filter(lambda s: not s.startswith("."), os.listdir(path_dir))
     for words_name in temp:
-        print words_name
+        print (words_name)
         if not os.path.exists(dest_path):
             os.makedirs(dest_path)
         sub_root_path = os.path.join(path_dir, words_name)

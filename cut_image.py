@@ -77,7 +77,7 @@ def binarize(im):
 # 获取图像值
 
 def show_image(im):
-    print im.ndim, im.dtype
+    print ("{},{}".format(im.ndim, im.dtype))
     cv2.imshow("image", im)
     cv2.waitKey(0)
 
@@ -90,8 +90,8 @@ def make_dir(path):
             return True
         else:
             return False
-    except Exception, e:
-        print str(e)
+    except Exception as e:
+        print( str(e))
 
 
 # 将文件写入到
@@ -114,9 +114,9 @@ def cut_image(image_cnt):
         f_name = os.path.join(path_dir + '/all', img_name)
         im = read_image(f_name)
         if im is None:
-            print "该图片{ %s }处理异常: " % img_name
+            print ("该图片{ %s }处理异常: " % img_name)
             continue
-        print os.path.join(ocr_path, img_name)
+        print (os.path.join(ocr_path, img_name))
         write_image(get_text(im), os.path.join(ocr_path, img_name))
         num = 1
         sub_name = img_name.split('.')
@@ -134,9 +134,9 @@ def thread_main():
     while True:
         cnt = cut_image(cnt)
         time.sleep(60)
-        print '第{ %s }次开始切割图片' % cnt
+        print ('第{ %s }次开始切割图片' % cnt)
         cnt += 1
 
 
 if __name__ == '__main__':
-    cut_image(0)
+    cut_image(1)

@@ -18,4 +18,4 @@ cfg = __C
 __C.CAFFE_ROOT = '/home/ruifengshan/caffe-ssd/'
 
 # 项目根目录
-__C.ROOT = '/home/ruifengshan/github/12306-captcha/'
+__C.ROOT = 'E:\\aaaaa\\12306-captcha'
