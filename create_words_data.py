@@ -21,7 +21,6 @@ def load_file(path=synset_file):
     print (synset)
     return synset
 
-
 def create_file(data_path, file_list, file_name):
     """
     创建训练文件train.txt/test.txt
@@ -34,12 +33,13 @@ def create_file(data_path, file_list, file_name):
 
     try:
         cnt = 0
-        if not os.path.isfile(file_name):
-            os.mknod(file_name)
-        file_txt = open(file_name, mode='wr')
-        for file_name in file_list:
-            print (file_name)
-            file_path = os.path.join(data_path, file_name)
+        # Windows不支持此种写法
+        #if not os.path.isfile(file_name):
+        #    os.mknod(file_name)
+        file_txt = open(file_name, mode='w')
+        for key in file_list:
+            print (key)
+            file_path = os.path.join(data_path, file_list[key])
             print (file_path)
             if not os.path.isdir(file_path):
                 print (file_path, '目录不存在')
@@ -51,15 +51,15 @@ def create_file(data_path, file_list, file_name):
         print ("执行失败", e)
 
 
-def create_train_file(data_path, file_list, train_file_name='train.txt'):
+def create_train_file(data_path, file_list, train_file_name='words/train.txt'):
     create_file(data_path, file_list, train_file_name)
 
 
-def create_test_file(data_path, file_list, test_file_name='test.txt'):
+def create_test_file(data_path, file_list, test_file_name='words/test.txt'):
     create_file(data_path, file_list, test_file_name)
 
 
 if __name__ == '__main__':
-    #create_train_file(cfg.ROOT + "/data/words/train/", load_file())
-    #create_test_file(cfg.ROOT + "/data/words/test/", load_file())
-    load_file()
+    create_train_file( "E:\\aaaaa\\download_captcha\\resize_words\\", label_dict )
+    create_test_file(  "E:\\aaaaa\\download_captcha\\resize_words\\", label_dict )
+    #load_file()
